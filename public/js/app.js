@@ -9,7 +9,7 @@ BasicGame.Boot.prototype =
     game.load.image('mute', 'images/mute-button.png');
     game.load.spritesheet('dude', 'images/walk-down-small.png', 50, 75);
     game.load.atlasJSONHash('tileset', 'images/fallout-tileset.png', 'images/fallout-tileset.json');
-    game.load.audio('fo2-music', 'assets/khans.mp3');
+    game.load.audio('fo2-music', 'assets/khans.ogg');
 
     game.time.advancedTiming = true;
 
