@@ -28,7 +28,15 @@ BasicGame.Boot.prototype =
     tileArray[3] = 'tile.png';
 
     var tiles = [
-      1, 2, 2, 2, 2, 2, 1, 0, 0, 1
+      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
+      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
+      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
+      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
+      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
+      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
+      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
+      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
+      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
     ];
 
     // Create a group for our tiles.
@@ -45,7 +53,7 @@ BasicGame.Boot.prototype =
     player.anchor.set(0.5);
     game.physics.isoArcade.enable(player);
     player.body.collideWorldBounds = true;
-    player.body.gravity.y = 6;
+    // player.body.gravity.z = -6;
 
     // setup player controls
     this.cursors = game.input.keyboard.createCursorKeys();
@@ -58,12 +66,17 @@ BasicGame.Boot.prototype =
       Phaser.Keyboard.SPACEBAR
     ]);
 
+    isoGroup.enableBody = true;
+
     button = game.add.button(95, 400, 'button', this.actionOnClick, this, 2, 1, 0);
   },
   update: function () {
     
     // sorting elements (hopefully!)
     game.iso.simpleSort(isoGroup);
+
+    // collision detection?
+    game.physics.isoArcade.collide(isoGroup);
 
     // setup player speed
     var speed = 100;
@@ -105,6 +118,8 @@ BasicGame.Boot.prototype =
       if (!tile.selected && inBounds) {
           tile.selected = true;
           tile.tint = 0x86bfda;
+          console.log(player);
+          console.log(tile);
       }
       // If not, revert back to how it was.
       else if (tile.selected && !inBounds) {
@@ -136,6 +151,7 @@ BasicGame.Boot.prototype =
 
         tile = game.add.isoSprite(xx, yy, tile_height, 'tileset', tileArray[tile_from_array], isoGroup);
         tile.anchor.set(0.8, 0);
+        game.physics.isoArcade.enable(tile);
       }
     }
   },
