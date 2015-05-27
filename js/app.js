@@ -6,8 +6,8 @@ var isoGroup, cursorPos, cursor, player, x_point, button, music;
 BasicGame.Boot.prototype =
 {
   preload: function () {
-    game.load.image('star', 'images/fallout-guy-small.png');
-    game.load.spritesheet('dude', '/images/walk-down-small.png', 50, 75);
+    game.load.image('mute', 'images/mute-button.png');
+    game.load.spritesheet('dude', 'images/walk-down-small.png', 50, 75);
     game.load.atlasJSONHash('tileset', 'images/fallout-tileset.png', 'images/fallout-tileset.json');
     game.load.audio('fo2-music', 'assets/khans.mp3');
 
@@ -16,7 +16,7 @@ BasicGame.Boot.prototype =
     // Add and enable the plug-in.
     game.plugins.add(new Phaser.Plugin.Isometric(game));
     game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE);
-    game.world.setBounds(0, 0, 2048, 1024);
+    game.world.setBounds(0, 0, 800, 600);
 
     // This is used to set a game canvas-based offset for the 0, 0, 0 isometric coordinate - by default
     // this point would be at screen coordinates 0, 0 (top left) which is usually undesirable.
@@ -79,9 +79,9 @@ BasicGame.Boot.prototype =
       Phaser.Keyboard.SPACEBAR
     ]);
 
-    isoGroup.enableBody = true;
+    var mute_button = game.add.button(30, 0, 'mute', this.actionOnClick, this);
 
-    button = game.add.button(95, 400, 'button', this.actionOnClick, this, 2, 1, 0);
+    isoGroup.enableBody = true;
   },
   update: function () {
     
@@ -168,6 +168,7 @@ BasicGame.Boot.prototype =
   },
   actionOnClick: function () {
     console.log("action click");
+    music.mute =! music.mute;
   }
 };
 
