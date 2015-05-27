@@ -41,7 +41,7 @@ BasicGame.Boot.prototype =
     cursorPos = new Phaser.Plugin.Isometric.Point3();
 
     // create a player object
-    player = game.add.isoSprite(32, 32, 0, 'star', 0, player);
+    player = game.add.isoSprite(32, 32, 9, 'star', 0, isoGroup);
     player.anchor.set(0.5);
     game.physics.isoArcade.enable(player);
     player.body.collideWorldBounds = true;
@@ -62,6 +62,9 @@ BasicGame.Boot.prototype =
   },
   update: function () {
     
+    // sorting elements (hopefully!)
+    game.iso.simpleSort(isoGroup);
+
     // setup player speed
     var speed = 100;
 
