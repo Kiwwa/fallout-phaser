@@ -1,13 +1,15 @@
 var game = new Phaser.Game(800, 480, Phaser.AUTO, 'test', null, true, false);
 var BasicGame = function (game) { };
 BasicGame.Boot = function (game) { };
-var isoGroup, cursorPos, cursor, player, x_point, button;
+var isoGroup, cursorPos, cursor, player, x_point, button, music;
 
 BasicGame.Boot.prototype =
 {
   preload: function () {
     game.load.image('star', 'images/fallout-guy-small.png');
+    game.load.spritesheet('dude', '/images/walk-down-small.png', 50, 75);
     game.load.atlasJSONHash('tileset', 'images/fallout-tileset.png', 'images/fallout-tileset.json');
+    game.load.audio('fo2-music', 'assets/khans.mp3');
 
     game.time.advancedTiming = true;
 
@@ -18,9 +20,13 @@ BasicGame.Boot.prototype =
 
     // This is used to set a game canvas-based offset for the 0, 0, 0 isometric coordinate - by default
     // this point would be at screen coordinates 0, 0 (top left) which is usually undesirable.
-    game.iso.anchor.setTo(0.5, 0.185);
+    game.iso.anchor.setTo(0.4, 0.1);
   },
   create: function () {
+    // add music to the game, yay!
+    music = game.add.audio('fo2-music');
+    music.play();
+
     // Create an array of tiles
     var tileArray = [];
     tileArray[0] = 'dirt-tile.png';
@@ -53,11 +59,14 @@ BasicGame.Boot.prototype =
     cursorPos = new Phaser.Plugin.Isometric.Point3();
 
     // create a player object
-    player = game.add.isoSprite(32, 32, 20, 'star', 0, isoGroup);
+    player = game.add.isoSprite(32, 32, 20, 'dude', 0, isoGroup);
     player.anchor.set(0.5);
     game.physics.isoArcade.enable(player);
     player.body.collideWorldBounds = true;
     game.camera.follow(player);
+
+    // player animations
+    player.animations.add('down', [0,1,2,3,4,5,6,7], 8, true);
 
     // setup player controls
     this.cursors = game.input.keyboard.createCursorKeys();
@@ -85,16 +94,18 @@ BasicGame.Boot.prototype =
     // setup player speed
     var speed = 100;
 
-    // player movement y  (keyboard)
+    // player movement y (keyboard)
     if (this.cursors.up.isDown) {
       player.body.velocity.y = -speed;
     } else if (this.cursors.down.isDown) {
       player.body.velocity.y = speed;
+      player.animations.play('down');
     } else {
       player.body.velocity.y = 0;
+      player.animations.stop();
     }
 
-    // player movement x  (keyboard)
+    // player movement x (keyboard)
     if (this.cursors.left.isDown) {
       player.body.velocity.x = -speed;
     } else if (this.cursors.right.isDown) {
@@ -140,7 +151,6 @@ BasicGame.Boot.prototype =
       for (var yy = 0, y_iter = 0; yy < 400; yy += 38, y_iter++) {
         // Create a tile using the new game.add.isoSprite factory method at the specified position.
         // The last parameter is the group you want to add it to (just like game.add.sprite)
-        console.log(x_iter, y_iter);
         var tile_from_array = tiles[x_iter][y_iter];
 
         if (tile_from_array === 1) {
