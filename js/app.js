@@ -6,7 +6,7 @@ var isoGroup, cursorPos, cursor, player, x_point, button;
 BasicGame.Boot.prototype =
 {
   preload: function () {
-    game.load.image('star', 'images/star.png');
+    game.load.image('star', 'images/guy-man.png');
     game.load.atlasJSONHash('tileset', 'images/fallout-tileset.png', 'images/fallout-tileset.json');
 
     game.time.advancedTiming = true;
@@ -41,6 +41,7 @@ BasicGame.Boot.prototype =
 
     // Create a group for our tiles.
     isoGroup = game.add.group();
+    game.iso.simpleSort(isoGroup);
 
     // Let's make a load of tiles on a grid.
     this.spawnTiles(tiles, tileArray);
@@ -49,11 +50,10 @@ BasicGame.Boot.prototype =
     cursorPos = new Phaser.Plugin.Isometric.Point3();
 
     // create a player object
-    player = game.add.isoSprite(32, 32, 9, 'star', 0, isoGroup);
+    player = game.add.isoSprite(32, 32, 20, 'star', 0, isoGroup);
     player.anchor.set(0.5);
     game.physics.isoArcade.enable(player);
     player.body.collideWorldBounds = true;
-    // player.body.gravity.z = -6;
 
     // setup player controls
     this.cursors = game.input.keyboard.createCursorKeys();
@@ -118,8 +118,6 @@ BasicGame.Boot.prototype =
       if (!tile.selected && inBounds) {
           tile.selected = true;
           tile.tint = 0x86bfda;
-          console.log(player);
-          console.log(tile);
       }
       // If not, revert back to how it was.
       else if (tile.selected && !inBounds) {
@@ -150,8 +148,9 @@ BasicGame.Boot.prototype =
         }
 
         tile = game.add.isoSprite(xx, yy, tile_height, 'tileset', tileArray[tile_from_array], isoGroup);
-        tile.anchor.set(0.8, 0);
+        tile.anchor.set(0.5, 0);
         game.physics.isoArcade.enable(tile);
+        // tile.body.immovable = true;
       }
     }
   },
