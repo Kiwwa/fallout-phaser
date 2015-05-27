@@ -6,7 +6,7 @@ var isoGroup, cursorPos, cursor, player, x_point, button;
 BasicGame.Boot.prototype =
 {
   preload: function () {
-    game.load.image('star', 'images/guy-man.png');
+    game.load.image('star', 'images/fallout-guy-small.png');
     game.load.atlasJSONHash('tileset', 'images/fallout-tileset.png', 'images/fallout-tileset.json');
 
     game.time.advancedTiming = true;
@@ -14,6 +14,7 @@ BasicGame.Boot.prototype =
     // Add and enable the plug-in.
     game.plugins.add(new Phaser.Plugin.Isometric(game));
     game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE);
+    game.world.setBounds(0, 0, 2048, 1024);
 
     // This is used to set a game canvas-based offset for the 0, 0, 0 isometric coordinate - by default
     // this point would be at screen coordinates 0, 0 (top left) which is usually undesirable.
@@ -54,6 +55,7 @@ BasicGame.Boot.prototype =
     player.anchor.set(0.5);
     game.physics.isoArcade.enable(player);
     player.body.collideWorldBounds = true;
+    game.camera.follow(player);
 
     // setup player controls
     this.cursors = game.input.keyboard.createCursorKeys();
@@ -100,7 +102,7 @@ BasicGame.Boot.prototype =
     }
 
     if (game.input.mousePointer.isDown) {
-      game.physics.arcade.moveToPointer(player, 400);
+      game.physics.arcade.moveToPointer(player, speed);
     }
 
     // Update the cursor position.
@@ -132,8 +134,8 @@ BasicGame.Boot.prototype =
   spawnTiles: function (tiles, tileArray) {
     var tile;
 
-    for (var xx = 0, x_iter = 0; xx < 380; xx += 38, x_iter++) {
-      for (var yy = 0, y_iter = 0; yy < 380; yy += 38, y_iter++) {
+    for (var xx = 0, x_iter = 0; xx < 600; xx += 38, x_iter++) {
+      for (var yy = 0, y_iter = 0; yy < 900; yy += 38, y_iter++) {
         // Create a tile using the new game.add.isoSprite factory method at the specified position.
         // The last parameter is the group you want to add it to (just like game.add.sprite)
         // console.log(yy);
@@ -148,7 +150,7 @@ BasicGame.Boot.prototype =
         tile = game.add.isoSprite(xx, yy, tile_height, 'tileset', tileArray[tile_from_array], isoGroup);
         tile.anchor.set(0.5, 0);
         game.physics.isoArcade.enable(tile);
-        // tile.body.immovable = true;
+        tile.body.immovable = true;
       }
     }
   },
