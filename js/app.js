@@ -29,15 +29,17 @@ BasicGame.Boot.prototype =
     tileArray[3] = 'tile.png';
 
     var tiles = [
-      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
-      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
-      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
-      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
-      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
-      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
-      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
-      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
-      1, 2, 2, 2, 2, 2, 1, 0, 0, 1,
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
+      [1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
+      [1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1],
     ];
 
     // Create a group for our tiles.
@@ -134,12 +136,12 @@ BasicGame.Boot.prototype =
   spawnTiles: function (tiles, tileArray) {
     var tile;
 
-    for (var xx = 0, x_iter = 0; xx < 600; xx += 38, x_iter++) {
-      for (var yy = 0, y_iter = 0; yy < 900; yy += 38, y_iter++) {
+    for (var xx = 0, x_iter = 0; xx < 400; xx += 38, x_iter++) {
+      for (var yy = 0, y_iter = 0; yy < 400; yy += 38, y_iter++) {
         // Create a tile using the new game.add.isoSprite factory method at the specified position.
         // The last parameter is the group you want to add it to (just like game.add.sprite)
-        // console.log(yy);
-        var tile_from_array = tiles[x_iter];
+        console.log(x_iter, y_iter);
+        var tile_from_array = tiles[x_iter][y_iter];
 
         if (tile_from_array === 1) {
           var tile_height = 40;
