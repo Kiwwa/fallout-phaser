@@ -100,9 +100,7 @@ BasicGame.Boot.prototype =
     }
 
     if (game.input.mousePointer.isDown) {
-      var moving_to_point = true;
-      var x_click_point = parseInt(cursorPos.x);
-      var y_click_point = parseInt(cursorPos.y);
+      game.physics.arcade.moveToPointer(player, 400);
     }
 
     // Update the cursor position.
