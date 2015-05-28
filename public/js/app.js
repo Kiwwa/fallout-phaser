@@ -8,6 +8,7 @@ BasicGame.Boot.prototype =
   preload: function () {
     game.load.image('mute', 'images/mute-button.png');
     game.load.image('walls', 'images/walls-button.png');
+    game.load.image('bottom-gui', 'images/bottom-gui.png');
     game.load.spritesheet('dude', 'images/dude-walk.png', 55, 75);
     game.load.atlasJSONHash('tileset', 'images/fallout-tileset.png', 'images/fallout-tileset.json');
     game.load.audio('fo2-music', 'assets/khans.ogg');
@@ -88,8 +89,16 @@ BasicGame.Boot.prototype =
       Phaser.Keyboard.SPACEBAR
     ]);
 
+    // define buttons
     var mute_button = game.add.button(30, 0, 'mute', this.muteButtonClick, this);
+    mute_button.fixedToCamera = true;
+    
     var wall_button = game.add.button(200, 0, 'walls', this.wallsButtonClick, this);
+    wall_button.fixedToCamera = true;
+
+    // create fake gui
+    var fake_gui = game.add.sprite(50, 380, 'bottom-gui');
+    fake_gui.fixedToCamera = true;
 
     isoGroup.enableBody = true;
   },
@@ -157,8 +166,8 @@ BasicGame.Boot.prototype =
   },
   render: function () {
     game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
-    game.debug.text(cursorPos.x, 2, 56, "#ffffff");
-    game.debug.text(cursorPos.y, 2, 76, "#ffffff");
+    // game.debug.text(cursorPos.x, 2, 56, "#ffffff");
+    // game.debug.text(cursorPos.y, 2, 76, "#ffffff");
   },
   spawnTiles: function (tiles, tileArray) {
     var tile;
