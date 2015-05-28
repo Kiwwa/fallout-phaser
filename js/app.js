@@ -121,6 +121,8 @@ BasicGame.Boot.prototype =
       game.physics.arcade.moveToPointer(player, speed);
     }
 
+    if (game.input.touch)
+
     // Update the cursor position.
     // It's important to understand that screen-to-isometric projection means you have to specify a z position 
     // manually, as this cannot be easily determined from the 2D pointer position without extra trickery. 
@@ -146,6 +148,7 @@ BasicGame.Boot.prototype =
     game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
     game.debug.text(cursorPos.x, 2, 56, "#ffffff");
     game.debug.text(cursorPos.y, 2, 76, "#ffffff");
+    game.debug.pointer(game.input.mousePointer);
   },
   spawnTiles: function (tiles, tileArray) {
     var tile;
