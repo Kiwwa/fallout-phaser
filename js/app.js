@@ -7,6 +7,7 @@ BasicGame.Boot.prototype =
 {
   preload: function () {
     game.load.image('mute', 'images/mute-button.png');
+    game.load.image('walls', 'images/walls-button.png');
     game.load.spritesheet('dude', 'images/dude-walk.png', 55, 75);
     game.load.atlasJSONHash('tileset', 'images/fallout-tileset.png', 'images/fallout-tileset.json');
     game.load.audio('fo2-music', 'assets/khans.ogg');
@@ -23,6 +24,9 @@ BasicGame.Boot.prototype =
     game.iso.anchor.setTo(0.4, 0.1);
   },
   create: function () {
+    // create a pointer for touch devices
+    game.input.addPointer();
+
     // add music to the game, yay!
     music = game.add.audio('fo2-music');
     music.play();
@@ -84,7 +88,8 @@ BasicGame.Boot.prototype =
       Phaser.Keyboard.SPACEBAR
     ]);
 
-    var mute_button = game.add.button(30, 0, 'mute', this.actionOnClick, this);
+    var mute_button = game.add.button(30, 0, 'mute', this.muteButtonClick, this);
+    var wall_button = game.add.button(0, 430, 'walls', this.wallsButtonClick, this);
 
     isoGroup.enableBody = true;
   },
@@ -118,10 +123,16 @@ BasicGame.Boot.prototype =
     }
 
     if (game.input.mousePointer.isDown) {
-      game.physics.arcade.moveToPointer(player, speed);
+      var mouse_x = game.input.mousePointer.position['x'];
+      var mouse_y = game.input.mousePointer.position['y'];
+      game.physics.arcade.moveToXY(player, mouse_x, mouse_y, speed);
     }
 
-    if (game.input.touch)
+    if (game.input.pointer1.isDown) {
+      var point1_x = game.input.pointer1.position['x'];
+      var point1_y = game.input.pointer1.position['y'];
+      game.physics.arcade.moveToXY(player, point1_x, point1_y, speed);
+    }
 
     // Update the cursor position.
     // It's important to understand that screen-to-isometric projection means you have to specify a z position 
@@ -148,7 +159,6 @@ BasicGame.Boot.prototype =
     game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
     game.debug.text(cursorPos.x, 2, 56, "#ffffff");
     game.debug.text(cursorPos.y, 2, 76, "#ffffff");
-    game.debug.pointer(game.input.mousePointer);
   },
   spawnTiles: function (tiles, tileArray) {
     var tile;
@@ -172,9 +182,12 @@ BasicGame.Boot.prototype =
       }
     }
   },
-  actionOnClick: function () {
+  muteButtonClick: function () {
     console.log("action click");
     music.mute =! music.mute;
+  },
+  wallsButtonClick: function() {
+    // set all tiles to immovable = false;
   },
   playerMovement: function(x, y) {
     var x = x || 0;
