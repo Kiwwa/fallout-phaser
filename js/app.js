@@ -7,7 +7,7 @@ BasicGame.Boot.prototype =
 {
   preload: function () {
     game.load.image('mute', 'images/mute-button.png');
-    game.load.spritesheet('dude', 'images/walk-down-small.png', 50, 75);
+    game.load.spritesheet('dude', 'images/dude-walk.png', 55, 75);
     game.load.atlasJSONHash('tileset', 'images/fallout-tileset.png', 'images/fallout-tileset.json');
     game.load.audio('fo2-music', 'assets/khans.ogg');
 
@@ -45,7 +45,7 @@ BasicGame.Boot.prototype =
       [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
-      [1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ];
 
     // Create a group for our tiles.
@@ -66,7 +66,12 @@ BasicGame.Boot.prototype =
     game.camera.follow(player);
 
     // player animations
-    player.animations.add('down', [0,1,2,3,4,5,6,7], 8, true);
+    player.animations.add('up',          [0,1,2,3,4,5,6,7], 8, true);
+    player.animations.add('up-right',    [8,9,10,11,12,13,14,15], 8, true);
+    player.animations.add('right',       [16,17,18,19,20,21,22,23], 8, true);
+    player.animations.add('down',        [24,25,26,27,28,29,30,31], 8, true);
+    player.animations.add('down-left',   [32,33,34,35,36,37,38,39], 8, true);
+    player.animations.add('left',        [40,41,42,43,44,45,46,47], 8, true);
 
     // setup player controls
     this.cursors = game.input.keyboard.createCursorKeys();
@@ -96,22 +101,20 @@ BasicGame.Boot.prototype =
 
     // player movement y (keyboard)
     if (this.cursors.up.isDown) {
-      player.body.velocity.y = -speed;
+      this.playerMovement(0, -speed);
+      player.animations.play('up');
     } else if (this.cursors.down.isDown) {
-      player.body.velocity.y = speed;
+      this.playerMovement(0, speed);
       player.animations.play('down');
-    } else {
-      player.body.velocity.y = 0;
-      player.animations.stop();
-    }
-
-    // player movement x (keyboard)
-    if (this.cursors.left.isDown) {
-      player.body.velocity.x = -speed;
+    } else if (this.cursors.left.isDown) {
+      this.playerMovement(-speed, 0);
+      player.animations.play('left');
     } else if (this.cursors.right.isDown) {
-      player.body.velocity.x = speed;
+      this.playerMovement(speed, 0);
+      player.animations.play('right');
     } else {
-      player.body.velocity.x = 0;
+      this.playerMovement(0,0);
+      player.animations.stop();
     }
 
     if (game.input.mousePointer.isDown) {
@@ -169,6 +172,13 @@ BasicGame.Boot.prototype =
   actionOnClick: function () {
     console.log("action click");
     music.mute =! music.mute;
+  },
+  playerMovement: function(x, y) {
+    var x = x || 0;
+    var y = y || 0;
+
+    player.body.velocity.x = x;
+    player.body.velocity.y = y;
   }
 };
 
