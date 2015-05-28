@@ -89,7 +89,7 @@ BasicGame.Boot.prototype =
     ]);
 
     var mute_button = game.add.button(30, 0, 'mute', this.muteButtonClick, this);
-    var wall_button = game.add.button(0, 430, 'walls', this.wallsButtonClick, this);
+    var wall_button = game.add.button(200, 0, 'walls', this.wallsButtonClick, this);
 
     isoGroup.enableBody = true;
   },
@@ -122,11 +122,11 @@ BasicGame.Boot.prototype =
       player.animations.stop();
     }
 
-    if (game.input.mousePointer.isDown) {
-      var mouse_x = game.input.mousePointer.position['x'];
-      var mouse_y = game.input.mousePointer.position['y'];
-      game.physics.arcade.moveToXY(player, mouse_x, mouse_y, speed);
-    }
+    // if (game.input.mousePointer.isDown) {
+    //   var mouse_x = game.input.mousePointer.position['x'];
+    //   var mouse_y = game.input.mousePointer.position['y'];
+    //   game.physics.arcade.moveToXY(player, mouse_x, mouse_y, speed);
+    // }
 
     if (game.input.pointer1.isDown) {
       var point1_x = game.input.pointer1.position['x'];
@@ -187,7 +187,10 @@ BasicGame.Boot.prototype =
     music.mute =! music.mute;
   },
   wallsButtonClick: function() {
-    // set all tiles to immovable = false;
+    for (idx in isoGroup.children) {
+      is_sprite_immovable = isoGroup.children[idx].body.immovable;
+      isoGroup.children[idx].body.immovable = !is_sprite_immovable;
+    }
   },
   playerMovement: function(x, y) {
     var x = x || 0;
