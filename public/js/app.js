@@ -22,7 +22,7 @@ BasicGame.Boot.prototype =
 
     // This is used to set a game canvas-based offset for the 0, 0, 0 isometric coordinate - by default
     // this point would be at screen coordinates 0, 0 (top left) which is usually undesirable.
-    game.iso.anchor.setTo(0.4, 0.1);
+    game.iso.anchor.setTo(0.5, 0.1);
   },
   create: function () {
     // create a pointer for touch devices
@@ -35,22 +35,23 @@ BasicGame.Boot.prototype =
     // Create an array of tiles
     var tileArray = [];
     tileArray[0] = 'dirt-tile.png';
-    tileArray[1] = 'test-tile-broken-wall.png';
+    tileArray[1] = 'test-tile-right-wall.png';
     tileArray[2] = 'test-tile-small.png';
     tileArray[3] = 'tile.png';
+    tileArray[4] = 'test-tile-bottom-wall.png'
 
     var tiles = [
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
-      [1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1],
-      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+      [3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 4],
+      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4],
+      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4],
+      [1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 4],
+      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4],
+      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4],
+      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4],
+      [0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
     ];
 
     // Create a group for our tiles.
@@ -97,7 +98,7 @@ BasicGame.Boot.prototype =
     wall_button.fixedToCamera = true;
 
     // create fake gui
-    var fake_gui = game.add.sprite(50, 380, 'bottom-gui');
+    var fake_gui = game.add.sprite(80, 380, 'bottom-gui');
     fake_gui.fixedToCamera = true;
 
     isoGroup.enableBody = true;
@@ -178,7 +179,7 @@ BasicGame.Boot.prototype =
         // The last parameter is the group you want to add it to (just like game.add.sprite)
         var tile_from_array = tiles[x_iter][y_iter];
 
-        if (tile_from_array === 1) {
+        if (tile_from_array === 1 || tile_from_array === 4) {
           var tile_height = 40;
         } else {
           var tile_height = 0;
@@ -207,8 +208,14 @@ BasicGame.Boot.prototype =
 
     player.body.velocity.x = x;
     player.body.velocity.y = y;
-  }
+  },
+  writeText: function(x, y, text) {
+    var text = game.add.text(x, y, text, { font: "12px Arial", fill: "#39FF14", align: "center" });
+  },
+  text_array: []
 };
+
+
 
 game.state.add('Boot', BasicGame.Boot);
 game.state.start('Boot');
