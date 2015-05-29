@@ -8,7 +8,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":40},
 	"sourceSize": {"w":70,"h":40}
 },
-"test-tile-broken-wall.png":
+"test-tile-bottom-wall.png":
 {
 	"frame": {"x":2,"y":2,"w":70,"h":80},
 	"rotated": false,
@@ -16,9 +16,17 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
 	"sourceSize": {"w":70,"h":80}
 },
+"test-tile-right-wall.png":
+{
+	"frame": {"x":74,"y":2,"w":70,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
+	"sourceSize": {"w":70,"h":80}
+},
 "test-tile-small.png":
 {
-	"frame": {"x":74,"y":2,"w":70,"h":40},
+	"frame": {"x":74,"y":84,"w":70,"h":40},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":40},
@@ -26,7 +34,7 @@
 },
 "tile.png":
 {
-	"frame": {"x":74,"y":44,"w":70,"h":40},
+	"frame": {"x":146,"y":2,"w":70,"h":40},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":40},
@@ -37,8 +45,8 @@
 	"version": "1.0",
 	"image": "fallout-tileset.png",
 	"format": "RGBA8888",
-	"size": {"w":146,"h":126},
+	"size": {"w":218,"h":126},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:c28592442aae01db813e537bc5b16e71:b33f5318fb97d587883bcd46f0fe7414:a692fa9f166834c67f1843a07e0c6f94$"
+	"smartupdate": "$TexturePacker:SmartUpdate:6bef5af6ff4b79ebe058afd424b86f16:2951b4c8133fa910458c10023f14eb8e:a692fa9f166834c67f1843a07e0c6f94$"
 }
 }
