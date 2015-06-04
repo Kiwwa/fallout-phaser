@@ -212,7 +212,7 @@ BasicGame.Boot.prototype =
   writeText: function(x, y, text) {
     var text = game.add.text(x, y, text, { font: "12px Arial", fill: "#39FF14", align: "center" });
   },
-  text_array: []
+  text_array: [],
 };
 
 
